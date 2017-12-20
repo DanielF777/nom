@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Yum.iml" filepath="$PROJECT_DIR$/Yum.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dataproviders/dataproviders.iml" filepath="$PROJECT_DIR$/dataproviders/dataproviders.iml" />
+    </modules>
+  </component>
+</project>
