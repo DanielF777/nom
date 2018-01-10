@@ -11,6 +11,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="dataproviders" target="1.8" />
+      <module name="nom" target="1.8" />
       <module name="Yum" target="1.8" />
     </bytecodeTargetLevel>
   </component>
