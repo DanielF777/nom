@@ -3,62 +3,61 @@ package jsonprovider;
 /**
  * Created by dev on 06/12/2017.
  */
-public class GoogleApiUrlBuilder {
-    private String returnFormat;
-    private String apiKey;
-    private String location;
-    private String radius;
-    private String type;
-    private String minPrice;
-    private String maxPrice;
+public class GoogleApiURLBuilder {
+    private String returnFormat = "";
+    private String apiKey = "";
+    private String location = "";
+    private String radius = "";
+    private String type = "";
+    private String minPrice = "";
+    private String maxPrice = "";
 
-    public GoogleApiUrlBuilder setReturnFormat(String returnFormat) {
+    public GoogleApiURLBuilder() {
+        returnFormat = "json?";
+        apiKey = "key=AIzaSyDy8zdsCIFrzd1pBq_E8-b71iNL4-3CZ38&";
+    }
+
+    public GoogleApiURLBuilder(String returnFormat, String apiKey) {
         this.returnFormat = returnFormat;
-        return this;
-    }
-
-    public GoogleApiUrlBuilder setApiKey(String apiKey) {
         this.apiKey = apiKey;
+    }
+
+    public GoogleApiURLBuilder setLocation(String location) {
+        this.location = "location=" + location + "&";
         return this;
     }
 
-    public GoogleApiUrlBuilder setLocation(String location) {
-        this.location = location + "&";
+    public GoogleApiURLBuilder setRadius(String radius) {
+        this.radius = "radius=" + radius + "&";
         return this;
     }
 
-    public GoogleApiUrlBuilder setRadius(String radius) {
-        this.radius = radius + "&";
+    public GoogleApiURLBuilder setType(String type) {
+        this.type = "type=" + type + "&";
         return this;
     }
 
-    public GoogleApiUrlBuilder setType(String type) {
-        this.type = type + "&";
+    public GoogleApiURLBuilder setMinPrice(String minPrice) {
+        this.minPrice = "minprice=" + minPrice + "&";
         return this;
     }
 
-    public GoogleApiUrlBuilder setMinPrice(String minPrice) {
-        this.minPrice = minPrice + "&";
+    public GoogleApiURLBuilder setMaxPrice(String maxPrice) {
+        this.maxPrice = "minprice=" + maxPrice + "&";
         return this;
     }
 
-    public GoogleApiUrlBuilder setMaxPrice(String maxPrice) {
-        this.maxPrice = maxPrice;
-        return this;
-    }
-
-    public String build() {
-        if (returnFormat == null && apiKey == null) {
-            throw new NullPointerException("Incorrect Amount of parameters set");
-        }
-        return "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-                returnFormat + "?" +
-                apiKey + "&" +
+    public GoogleApiURL build() {
+        String urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+                returnFormat +
+                apiKey +
                 location +
                 radius +
                 type +
                 minPrice +
                 maxPrice;
+
+        return new GoogleApiURL(urlString.substring(0, urlString.length() - 1));
 
     }
 }

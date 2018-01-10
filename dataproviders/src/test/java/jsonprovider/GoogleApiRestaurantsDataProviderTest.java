@@ -1,7 +1,5 @@
 package jsonprovider;
 
-import jsonprovider.GoogleApiRestaurantsDataProvider;
-import jsonprovider.NoRestaurantsFoundException;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -13,13 +11,11 @@ public class GoogleApiRestaurantsDataProviderTest {
 
     private final GoogleApiRestaurantsDataProvider googleApiRestaurantsDataProvider = new GoogleApiRestaurantsDataProvider();
 
-    @Test(expected = Exception.class)
+    @Test
     public void throwsExceptionWhenGoogleReturnsNoResults() throws Exception {
         assertThatThrownBy(googleApiRestaurantsDataProvider::findRestaurants)
                 .isInstanceOf(NoRestaurantsFoundException.class)
                 .hasMessage("No restaurants found.");
-
-
 
     }
 

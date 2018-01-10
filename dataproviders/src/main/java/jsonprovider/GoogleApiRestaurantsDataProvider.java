@@ -6,6 +6,7 @@ package jsonprovider;
 public class GoogleApiRestaurantsDataProvider {
 
 
+
     public void findRestaurants() throws NoRestaurantsFoundException {
 
         //request from google with params some restaurants
