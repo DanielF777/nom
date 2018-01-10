@@ -14,7 +14,7 @@ public class GoogleApiURLBuilder {
 
     public GoogleApiURLBuilder() {
         returnFormat = "json?";
-        apiKey = "key=AIzaSyDy8zdsCIFrzd1pBq_E8-b71iNL4-3CZ38&";
+        apiKey = "AIzaSyBCnVl2QP6CC4AHuu9YopygteKq_RX8KYA&";
     }
 
     public GoogleApiURLBuilder(String returnFormat, String apiKey) {

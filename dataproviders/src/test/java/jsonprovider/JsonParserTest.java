@@ -1,21 +1,54 @@
 package jsonprovider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class  JsonParserTest {
+public class JsonParserTest {
+
+    private static final String URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+            "json?key=AIzaSyBCnVl2QP6CC4AHuu9YopygteKq_RX8KYA&" +
+            "location=51.5076656,-0.0700636&" +
+            "radius=500&" +
+            "type=restaurant&" +
+            "minprice=0&" +
+            "maxprice=3";
 
     @Test
     public void jsonIsParsedIntoRestaurants() throws Exception {
 
+
+//        CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
+//
+//        HttpGet httpGet = new HttpGet(
+//                URI);
+//
+//        System.out.println(URI);
+//
+//        HttpEntity entity = closeableHttpClient.execute(httpGet).getEntity();
+//
+//        InputStream content = entity.getContent();
+//
+//        String result = new BufferedReader(new InputStreamReader(content))
+//          .lines().collect(Collectors.joining("\n"));
+//
+//        Results results = jsonParser.parseString(result);
+
         JsonParser jsonParser = new JsonParser(new ObjectMapper());
 
-        List<Restaurant> restaurants = jsonParser.parseString("{\n" +
+        Results restaurants = jsonParser.parseString("{\n" +
                 "    \"html_attributions\": [],\n" +
                 "    \"results\": [\n" +
                 "        {\n" +
@@ -114,15 +147,15 @@ public class  JsonParserTest {
                 "                \"establishment\"\n" +
                 "            ],\n" +
                 "            \"vicinity\": \"3, Saint Katharine's Way, London\"\n" +
-                "        }," +
+                "        }" +
                 "] " +
                 "}");
 
         Restaurant expectedRestaurant = new Restaurant("Cafe Rouge", 2, 3.8, "Unit 4, Quayside Road, St Katharine Docks, London");
         Restaurant secondExpectedRestaurant = new Restaurant("Ping Pong St Katharine Docks", 2, 4, "3, Saint Katharine's Way, London");
 
-        assertEquals(expectedRestaurant, restaurants.get(0));
-        assertEquals(secondExpectedRestaurant, restaurants.get(1));
+        assertEquals(expectedRestaurant, restaurants.getRestaurants()[0]);
+        assertEquals(secondExpectedRestaurant, restaurants.getRestaurants()[1]);
     }
 
 }

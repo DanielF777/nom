@@ -1,11 +1,9 @@
 package jsonprovider;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by dev on 06/12/2017.
@@ -16,13 +14,14 @@ public class JsonParser {
 
     public JsonParser(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+        objectMapper.configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false);
     }
 
-    public List<Restaurant> parseString(String s) {
-        ArrayList<Restaurant> restaurants = new ArrayList<>();
+    public Results parseString(String jsonStringToParse) {
+        Results restaurants = new Results();
 
         try {
-            restaurants = objectMapper.readValue(s, new TypeReference<List<Restaurant>>(){});
+            restaurants = objectMapper.readValue(jsonStringToParse, Results.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
