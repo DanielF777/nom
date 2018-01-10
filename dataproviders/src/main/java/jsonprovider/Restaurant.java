@@ -6,22 +6,12 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Restaurant {
-    @JsonProperty("name")
-    private String name;
+    private final String name;
+    private final int priceLevel;
+    private final double rating;
+    private final String address;
 
-    @JsonProperty("price_level")
-    private int priceLevel;
-
-    @JsonProperty("rating")
-    private double rating;
-
-    @JsonProperty("vicinity")
-    private String address;
-
-    public Restaurant() {
-    }
-
-    public Restaurant(String name, int priceLevel, double rating, String address) {
+    public Restaurant(@JsonProperty("name") String name, @JsonProperty("price_level") int priceLevel, @JsonProperty("rating") double rating, @JsonProperty("vicinity") String address) {
         this.name = name;
         this.priceLevel = priceLevel;
         this.rating = rating;

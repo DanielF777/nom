@@ -1,20 +1,9 @@
 package jsonprovider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 public class JsonParserTest {
 
@@ -154,8 +143,9 @@ public class JsonParserTest {
         Restaurant expectedRestaurant = new Restaurant("Cafe Rouge", 2, 3.8, "Unit 4, Quayside Road, St Katharine Docks, London");
         Restaurant secondExpectedRestaurant = new Restaurant("Ping Pong St Katharine Docks", 2, 4, "3, Saint Katharine's Way, London");
 
-        assertEquals(expectedRestaurant, restaurants.getRestaurants()[0]);
-        assertEquals(secondExpectedRestaurant, restaurants.getRestaurants()[1]);
+
+        assertEquals(expectedRestaurant.toString(), restaurants.getRestaurants()[0].toString());
+        assertEquals(secondExpectedRestaurant.toString(), restaurants.getRestaurants()[1].toString());
     }
 
 }
