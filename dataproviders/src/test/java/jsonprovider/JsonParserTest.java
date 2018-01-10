@@ -1,6 +1,8 @@
 package jsonprovider;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nom.googleapi.domain.Restaurant;
+import nom.googleapi.domain.Results;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
