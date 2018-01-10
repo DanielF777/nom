@@ -1,5 +1,6 @@
 package jsonprovider;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
 import java.util.List;
@@ -7,12 +8,12 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
-public class JsonParserTest {
+public class  JsonParserTest {
 
     @Test
     public void jsonIsParsedIntoRestaurants() throws Exception {
 
-        JsonParser jsonParser = new JsonParser();
+        JsonParser jsonParser = new JsonParser(new ObjectMapper());
 
         List<Restaurant> restaurants = jsonParser.parseString("{\n" +
                 "    \"html_attributions\": [],\n" +

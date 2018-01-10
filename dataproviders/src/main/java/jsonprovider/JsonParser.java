@@ -1,5 +1,9 @@
 package jsonprovider;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,19 +15,17 @@ public class JsonParser {
     private final ObjectMapper objectMapper;
 
     public JsonParser(ObjectMapper objectMapper) {
-
         this.objectMapper = objectMapper;
     }
 
     public List<Restaurant> parseString(String s) {
-
         ArrayList<Restaurant> restaurants = new ArrayList<>();
 
-        Restaurant restaurant = new Restaurant("Cafe Rouge", 2, 3.8, "Unit 4, Quayside Road, St Katharine Docks, London");
-
-
-
-        restaurants.add(restaurant);
+        try {
+            restaurants = objectMapper.readValue(s, new TypeReference<List<Restaurant>>(){});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return restaurants;
     }
