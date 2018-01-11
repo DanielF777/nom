@@ -29,6 +29,6 @@ public class Restaurant {
 
     @Override
     public String toString() {
-        return "Name: " + name + " Price Level: " + priceLevel + " Rating: " + rating + " Address: " + address;
+        return "Name: " + name + "\nPrice Level: " + priceLevel + "\nRating: " + rating + "\nAddress: " + address + "\n";
     }
 }

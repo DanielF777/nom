@@ -1,44 +1,42 @@
 package nom.googleapi;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import jsonprovider.JsonParser;
 import jsonprovider.NoRestaurantsFoundException;
-import nom.googleapi.domain.Restaurant;
 import nom.googleapi.domain.Results;
 import nom.googleapi.domain.UriBuilder;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.not;
 
 /**
  * Created by dev on 06/12/2017.
  */
+@RunWith(MockitoJUnitRunner.class)
 public class RestaurantDataProviderTest {
+
+    @Mock
+    private JsonParser jsonParser;
 
     private RestaurantDataProvider restaurantDataProvider;
     private HttpServer httpServer;
 
     @Before
     public void setUp() {
-        restaurantDataProvider = new RestaurantDataProvider(new ObjectMapper());
+        restaurantDataProvider = new RestaurantDataProvider(new UriBuilder("http://localhost:8543/").asUri(), jsonParser);
     }
 
     @After
@@ -49,29 +47,17 @@ public class RestaurantDataProviderTest {
     @Test(expected = NoRestaurantsFoundException.class)
     public void throwsExceptionWhenGoogleReturnsNoResults() throws Exception {
         startHttpServer("");
-        restaurantDataProvider.findAllRestaurants(new UriBuilder("http://localhost:8543/").asUri());
+        restaurantDataProvider.getRestaurantResults();
     }
 
     @Test
     public void testJsonFromServer() throws Exception {
-
         startHttpServer(getResponse());
+        URI uri = new UriBuilder("http://localhost:8543").asUri();
 
-        URI uri = new UriBuilder("http://localhost:8543/").asUri();
+        Results results = restaurantDataProvider.getRestaurantResults();
 
-        HttpClient httpClient = HttpClientBuilder.create().build();
-
-        HttpResponse response = httpClient.execute(new HttpGet(uri));
-
-        String content = IOUtils.toString(response.getEntity().getContent());
-
-        JsonParser jsonParser = new JsonParser(new ObjectMapper());
-
-        Results results = jsonParser.parseString(content);
-
-        List<Restaurant> restaurants = Arrays.asList(results.getRestaurants());
-
-        assertThat(restaurants.size(), is(not(0)));
+        assertThat(results, is(not(0)));
 
     }
 

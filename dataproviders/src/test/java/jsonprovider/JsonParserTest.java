@@ -128,7 +128,6 @@ public class JsonParserTest {
         Restaurant expectedRestaurant = new Restaurant("Cafe Rouge", 2, 3.8, "Unit 4, Quayside Road, St Katharine Docks, London");
         Restaurant secondExpectedRestaurant = new Restaurant("Ping Pong St Katharine Docks", 2, 4, "3, Saint Katharine's Way, London");
 
-
         assertEquals(expectedRestaurant.toString(), restaurants.getRestaurants()[0].toString());
         assertEquals(secondExpectedRestaurant.toString(), restaurants.getRestaurants()[1].toString());
     }
