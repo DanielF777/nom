@@ -18,24 +18,7 @@ public class JsonParserTest {
             "maxprice=3";
 
     @Test
-    public void jsonIsParsedIntoRestaurants() throws Exception {
-
-
-//        CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
-//
-//        HttpGet httpGet = new HttpGet(
-//                URI);
-//
-//        System.out.println(URI);
-//
-//        HttpEntity entity = closeableHttpClient.execute(httpGet).getEntity();
-//
-//        InputStream content = entity.getContent();
-//
-//        String result = new BufferedReader(new InputStreamReader(content))
-//          .lines().collect(Collectors.joining("\n"));
-//
-//        Results results = jsonParser.parseString(result);
+    public void jsonIsParsedIntoRestaurants() {
 
         JsonParser jsonParser = new JsonParser(new ObjectMapper());
 

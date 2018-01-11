@@ -37,12 +37,12 @@ public class RestaurantDataProviderTest {
     private HttpServer httpServer;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         restaurantDataProvider = new RestaurantDataProvider(new ObjectMapper());
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         httpServer.stop(0);
     }
 
@@ -75,13 +75,13 @@ public class RestaurantDataProviderTest {
 
     }
 
-    private void startHttpServer(String response) throws IOException {
+    private void startHttpServer(String responseAsString) throws IOException {
         httpServer = HttpServer.create(new InetSocketAddress(8543), 0);
 
         httpServer.createContext("/", (HttpExchange httpExchange) -> {
-                    httpExchange.sendResponseHeaders(200, response.length());
+                    httpExchange.sendResponseHeaders(200, responseAsString.length());
                     OutputStream outputStream = httpExchange.getResponseBody();
-                    outputStream.write(response.getBytes());
+                    outputStream.write(responseAsString.getBytes());
                     outputStream.close();
                 }
         );

@@ -19,14 +19,16 @@ public class JsonParser {
     }
 
     public Results parseString(String jsonStringToParse) {
-        Results restaurants = new Results();
+        Results restaurants;
 
         try {
             restaurants = objectMapper.readValue(jsonStringToParse, Results.class);
+            return restaurants;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return restaurants;
+        return null;
+
     }
 }

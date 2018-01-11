@@ -3,10 +3,8 @@ package nom.googleapi;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jsonprovider.JsonParser;
 import jsonprovider.NoRestaurantsFoundException;
-import nom.googleapi.domain.PlaceType;
 import nom.googleapi.domain.Restaurant;
 import nom.googleapi.domain.Results;
-import nom.googleapi.domain.UriBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,8 +13,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
 import java.net.URI;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 public class RestaurantDataProvider {
 
@@ -33,7 +31,7 @@ public class RestaurantDataProvider {
 
         String s = IOUtils.toString(response.getEntity().getContent());
 
-        if(s == null | s.isEmpty()) {
+        if (s == null | s.isEmpty()) {
             throw new NoRestaurantsFoundException("No restaurant matches found from google.");
         }
 

@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Results {
 
-    @JsonProperty("results")
     private Restaurant[] restaurants;
 
+    public Results(@JsonProperty("results") Restaurant[] restaurants) {
+        this.restaurants = restaurants;
+    }
 
     public Restaurant[] getRestaurants() {
         return restaurants;

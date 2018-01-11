@@ -13,7 +13,7 @@ public class UrlBuilderTest {
     private UriBuilder googleApiUrlBuilder = new UriBuilder();
 
     @Test
-    public void validBaseUri() throws Exception {
+    public void validBaseUri() {
         URI uri = googleApiUrlBuilder.asUri();
 
         assertThat(uri.getHost(), is("maps.googleapis.com"));
@@ -23,21 +23,21 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void validUriWithType() throws Exception {
+    public void validUriWithType() {
         URI uri = googleApiUrlBuilder.withType(PlaceType.RESTAURANT).asUri();
 
         assertThat(uri, hasTypeParameterOf("restaurant"));
     }
 
     @Test
-    public void validUriWithRadius() throws Exception {
+    public void validUriWithRadius() {
         URI uri = googleApiUrlBuilder.withRadius(500).asUri();
 
         assertThat(uri, hasQueryParameter("radius", "500"));
     }
 
     @Test
-    public void validUriWithLocation() throws Exception {
+    public void validUriWithLocation() {
         MapLocation location = new MapLocation(51.5076656, -0.0700636);
         URI uri = googleApiUrlBuilder.withLocation(location).asUri();
 
@@ -45,7 +45,7 @@ public class UrlBuilderTest {
     }
 
     @Test
-    public void validUriWithPriceRange() throws Exception {
+    public void validUriWithPriceRange() {
         URI uri = googleApiUrlBuilder.setPriceRange(22, 44).asUri();
 
         assertThat(uri, hasQueryParameter("minPrice", "22"));
