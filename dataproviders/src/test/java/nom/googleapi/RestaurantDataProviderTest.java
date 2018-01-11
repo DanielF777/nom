@@ -20,7 +20,7 @@ import static org.hamcrest.Matchers.hasSize;
 /**
  * Created by dev on 06/12/2017.
  */
-public class GoogleApiRestaurantsDataProviderTest {
+public class RestaurantDataProviderTest {
 
     private RestaurantDataProvider restaurantDataProvider;
     public String response;

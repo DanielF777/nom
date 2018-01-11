@@ -22,7 +22,6 @@ public class UriParameterMatcher extends TypeSafeMatcher<URI> implements Matcher
         return hasQueryParameter("type", expectedValue);
     }
 
-
     private final String expectedValue;
     private final String param;
 

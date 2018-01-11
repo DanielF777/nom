@@ -13,10 +13,18 @@ public class UriBuilder {
     private final Map<String, String> queryParams = new HashMap<>();
     private ReturnFormat returnFormat;
     private String apiKey;
+    private final String host;
 
     public UriBuilder() {
         returnFormat = JSON;
         apiKey = "AIzaSyBChwbZUapUol5hwM0KS0NXuesRjpv58_A";
+        host = "https://maps.googleapis.com";
+    }
+
+    public UriBuilder(String host) {
+        this.host = host;
+        apiKey = "AIzaSyBChwbZUapUol5hwM0KS0NXuesRjpv58_A";
+        returnFormat = JSON;
     }
 
     public UriBuilder withLocation(MapLocation location) {
@@ -42,7 +50,8 @@ public class UriBuilder {
 
     public URI asUri() {
         queryParams.put("key", apiKey);
-        return URI.create(String.format("https://maps.googleapis.com/maps/api/place/nearbysearch/%s?%s",
+        return URI.create(String.format("%s/maps/api/place/nearbysearch/%s?%s",
+                host,
                 returnFormat.value(),
                 Joiner.on("&").withKeyValueSeparator("=").join(queryParams)
         ));
