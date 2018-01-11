@@ -33,7 +33,7 @@ public class RestaurantDataProvider {
 
         String s = IOUtils.toString(response.getEntity().getContent());
 
-        if(s == null) {
+        if(s == null | s.isEmpty()) {
             throw new NoRestaurantsFoundException("No restaurant matches found from google.");
         }
 

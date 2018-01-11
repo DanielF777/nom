@@ -15,16 +15,21 @@ public class UriBuilder {
     private String apiKey;
     private final String host;
 
-    public UriBuilder() {
+    private void populateDefaultRequiredValues() {
         returnFormat = JSON;
         apiKey = "AIzaSyBChwbZUapUol5hwM0KS0NXuesRjpv58_A";
+        queryParams.put("location", new MapLocation(51.5076656, -0.0700636).asString());
+        queryParams.put("radius", String.valueOf(500));
+    }
+
+    public UriBuilder() {
         host = "https://maps.googleapis.com";
+        populateDefaultRequiredValues();
     }
 
     public UriBuilder(String host) {
         this.host = host;
-        apiKey = "AIzaSyBChwbZUapUol5hwM0KS0NXuesRjpv58_A";
-        returnFormat = JSON;
+        populateDefaultRequiredValues();
     }
 
     public UriBuilder withLocation(MapLocation location) {

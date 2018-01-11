@@ -1,6 +1,7 @@
 package nom.googleapi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 import jsonprovider.JsonParser;
 import jsonprovider.NoRestaurantsFoundException;
@@ -12,7 +13,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.hamcrest.core.IsNull;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,54 +38,50 @@ public class RestaurantDataProviderTest {
 
     @Before
     public void setUp() throws Exception {
-        startHttpServer();
         restaurantDataProvider = new RestaurantDataProvider(new ObjectMapper());
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        httpServer.stop(0);
     }
 
     @Test(expected = NoRestaurantsFoundException.class)
     public void throwsExceptionWhenGoogleReturnsNoResults() throws Exception {
-        startHttpServer();
-        restaurantDataProvider.findAllRestaurants(new UriBuilder("http://localhost:8123/").asUri());
-        stopHttpServer();
+        startHttpServer("");
+        restaurantDataProvider.findAllRestaurants(new UriBuilder("http://localhost:8543/").asUri());
     }
-
 
     @Test
     public void testJsonFromServer() throws Exception {
-        startHttpServer();
 
-        URI uri = new UriBuilder("http://localhost:8123/").asUri();
+        startHttpServer(getResponse());
+
+        URI uri = new UriBuilder("http://localhost:8543/").asUri();
 
         HttpClient httpClient = HttpClientBuilder.create().build();
 
         HttpResponse response = httpClient.execute(new HttpGet(uri));
 
-        String s = IOUtils.toString(response.getEntity().getContent());
-
-//        List<Restaurant> restaurantList = restaurantDataProvider.findAllRestaurants();
-
-        assertThat(s, is(IsNull.nullValue()));
+        String content = IOUtils.toString(response.getEntity().getContent());
 
         JsonParser jsonParser = new JsonParser(new ObjectMapper());
 
-        Results results = jsonParser.parseString(s);
+        Results results = jsonParser.parseString(content);
 
         List<Restaurant> restaurants = Arrays.asList(results.getRestaurants());
 
         assertThat(restaurants.size(), is(not(0)));
 
-        stopHttpServer();
-
     }
 
-    private void startHttpServer() throws IOException {
-        httpServer = HttpServer.create(new InetSocketAddress(8123), 0);
+    private void startHttpServer(String response) throws IOException {
+        httpServer = HttpServer.create(new InetSocketAddress(8543), 0);
 
-        httpServer.createContext("/", httpExchange -> {
-
-                    httpExchange.sendResponseHeaders(200, getResponse().length());
+        httpServer.createContext("/", (HttpExchange httpExchange) -> {
+                    httpExchange.sendResponseHeaders(200, response.length());
                     OutputStream outputStream = httpExchange.getResponseBody();
-                    outputStream.write(getResponse().getBytes());
+                    outputStream.write(response.getBytes());
                     outputStream.close();
                 }
         );
@@ -92,10 +89,6 @@ public class RestaurantDataProviderTest {
         httpServer.setExecutor(null);
         httpServer.start();
 
-    }
-
-    private void stopHttpServer() {
-        httpServer.stop(0);
     }
 
     private String getResponse() {
