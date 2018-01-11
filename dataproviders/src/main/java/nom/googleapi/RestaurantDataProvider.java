@@ -1,8 +1,11 @@
 package nom.googleapi;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jsonprovider.JsonParser;
 import jsonprovider.NoRestaurantsFoundException;
 import nom.googleapi.domain.PlaceType;
 import nom.googleapi.domain.Restaurant;
+import nom.googleapi.domain.Results;
 import nom.googleapi.domain.UriBuilder;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -13,26 +16,29 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Arrays;
 
 public class RestaurantDataProvider {
 
-    public List<Restaurant> findRestaurants() throws NoRestaurantsFoundException, IOException {
-        URI uri = new UriBuilder("http://localhost:8000").withType(PlaceType.FOOD).asUri();
+    private JsonParser jsonParser;
 
+    public RestaurantDataProvider(ObjectMapper objectMapper) {
+        this.jsonParser = new JsonParser(objectMapper);
+    }
+
+    public List<Restaurant> findAllRestaurants(URI uri) throws NoRestaurantsFoundException, IOException {
         HttpClient httpClient = HttpClientBuilder.create().build();
 
         HttpResponse response = httpClient.execute(new HttpGet(uri));
 
         String s = IOUtils.toString(response.getEntity().getContent());
 
-        System.out.println("s = " + s);
+        if(s == null) {
+            throw new NoRestaurantsFoundException("No restaurant matches found from google.");
+        }
 
-        //request from google with params some restaurants
+        Results results = jsonParser.parseString(s);
 
-        //receive json response with restaurants
-
-        //json parser maps to objects
-
-        throw new NoRestaurantsFoundException("No restaurants found.");
+        return Arrays.asList(results.getRestaurants());
     }
 }
