@@ -5,11 +5,10 @@ import nom.googleapi.RestaurantDataProvider;
 import nom.googleapi.domain.Restaurant;
 import nom.googleapi.domain.Results;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class NomApplication {
 
@@ -19,46 +18,30 @@ public class NomApplication {
         this.restaurantDataProvider = restaurantDataProvider;
     }
 
-    public List<Restaurant> find3Restaurants() {
-
-        Results results = null;
-
+    public List<Restaurant> findRestaurants(int numberOfRestaurants) {
         try {
-            results = restaurantDataProvider.getRestaurantResults();
+            Results results = restaurantDataProvider.getRestaurantResults();
+
+            List<Restaurant> restaurants = filterResultsToGive3RestaurantsAtRandom(results.getRestaurants(), numberOfRestaurants);
+
+            for (Restaurant restaurant : restaurants) {
+                System.out.println(restaurant.toString());
+            }
+
+            return restaurants;
         } catch (NoRestaurantsFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-
-        List<Restaurant> restaurants;
-
-        restaurants = filterResultsToGive3RestaurantsAtRandom(results.getRestaurants());
-
-        for (Restaurant restaurant : restaurants) {
-            System.out.println(restaurant.toString());
-        }
-
-        return restaurants;
-
     }
 
-    private List<Restaurant> filterResultsToGive3RestaurantsAtRandom(Restaurant[] restaurants) {
-
-        List<Restaurant> threeRestaurantsAtRandom = new ArrayList<>();
-
-        if (restaurants.length == 2) {
+    private List<Restaurant> filterResultsToGive3RestaurantsAtRandom(Restaurant[] restaurants, int numberOfRestaurants) {
+        if (restaurants.length < numberOfRestaurants) {
             return Arrays.asList(restaurants);
         }
 
         restaurants = randomlyShuffleRestaurantArray(restaurants);
 
-        threeRestaurantsAtRandom.add(restaurants[0]);
-        threeRestaurantsAtRandom.add(restaurants[1]);
-        threeRestaurantsAtRandom.add(restaurants[2]);
-
-        return threeRestaurantsAtRandom;
-
+        return Arrays.stream(restaurants).limit(numberOfRestaurants).collect(Collectors.toList());
     }
 
     private Restaurant[] randomlyShuffleRestaurantArray(Object[] restaurantsToShuffle) {

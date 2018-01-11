@@ -18,6 +18,7 @@ public class UriBuilder {
     private void populateDefaultRequiredValues() {
         returnFormat = JSON;
         apiKey = "AIzaSyBChwbZUapUol5hwM0KS0NXuesRjpv58_A";
+        queryParams.put("key", apiKey);
         queryParams.put("location", new MapLocation(51.5076656, -0.0700636).asString());
         queryParams.put("radius", String.valueOf(500));
     }
@@ -54,7 +55,6 @@ public class UriBuilder {
     }
 
     public URI asUri() {
-        queryParams.put("key", apiKey);
         return URI.create(String.format("%s/maps/api/place/nearbysearch/%s?%s",
                 host,
                 returnFormat.value(),

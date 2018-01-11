@@ -21,7 +21,7 @@ public class Runner {
 
         NomApplication nomApplication = new NomApplication(restaurantDataProvider);
 
-        nomApplication.find3Restaurants();
+        nomApplication.findRestaurants(5);
 
     }
 

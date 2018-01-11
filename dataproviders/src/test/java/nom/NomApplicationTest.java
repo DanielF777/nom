@@ -9,8 +9,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -27,8 +25,9 @@ public class NomApplicationTest {
     public void find3RestaurantsAtRandom() throws Exception {
         restaurantDataProvider = Mockito.mock(RestaurantDataProvider.class);
         NomApplication nomApplication = new NomApplication(restaurantDataProvider);
+        int numberOfRestaurants = 5;
 
-        Restaurant[] restaurants = new Restaurant[5];
+        Restaurant[] restaurants = new Restaurant[numberOfRestaurants];
 
         restaurants[0] = new Restaurant("Pete", 2, 3, "");
         restaurants[1] = new Restaurant("Dan", 2, 4, "");
@@ -38,8 +37,8 @@ public class NomApplicationTest {
 
         when(restaurantDataProvider.getRestaurantResults()).thenReturn(new Results(restaurants));
 
-        List<Restaurant> randomRestaurants = nomApplication.find3Restaurants();
+        List<Restaurant> randomRestaurants = nomApplication.findRestaurants(numberOfRestaurants);
 
-        assertThat(randomRestaurants.size(), is(3));
+        assertThat(randomRestaurants.size(), is(numberOfRestaurants));
     }
 }

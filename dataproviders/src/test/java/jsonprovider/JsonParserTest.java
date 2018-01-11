@@ -9,14 +9,6 @@ import static org.junit.Assert.assertEquals;
 
 public class JsonParserTest {
 
-    private static final String URI = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-            "json?key=AIzaSyBCnVl2QP6CC4AHuu9YopygteKq_RX8KYA&" +
-            "location=51.5076656,-0.0700636&" +
-            "radius=500&" +
-            "type=restaurant&" +
-            "minprice=0&" +
-            "maxprice=3";
-
     @Test
     public void jsonIsParsedIntoRestaurants() {
 

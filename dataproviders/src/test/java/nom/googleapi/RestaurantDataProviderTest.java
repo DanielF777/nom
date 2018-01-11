@@ -16,7 +16,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
-import java.net.URI;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -53,7 +52,6 @@ public class RestaurantDataProviderTest {
     @Test
     public void testJsonFromServer() throws Exception {
         startHttpServer(getResponse());
-        URI uri = new UriBuilder("http://localhost:8543").asUri();
 
         Results results = restaurantDataProvider.getRestaurantResults();
 
