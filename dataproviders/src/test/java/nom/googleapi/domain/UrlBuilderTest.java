@@ -1,5 +1,6 @@
 package nom.googleapi.domain;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URI;
@@ -11,6 +12,12 @@ import static org.junit.Assert.assertThat;
 public class UrlBuilderTest {
 
     private UriBuilder googleApiUrlBuilder = new UriBuilder();
+
+
+    @Before
+    public void setUp() {
+        System.setProperty("apiKey", "");
+    }
 
     @Test
     public void validBaseUri() {

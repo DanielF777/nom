@@ -17,7 +17,7 @@ public class UriBuilder {
 
     private void populateDefaultRequiredValues() {
         returnFormat = JSON;
-        apiKey = System.getenv("apiKey");
+        apiKey = System.getProperty("apiKey");
         queryParams.put("key", apiKey);
         queryParams.put("location", new MapLocation(51.5076656, -0.0700636).asString());
         queryParams.put("radius", String.valueOf(500));

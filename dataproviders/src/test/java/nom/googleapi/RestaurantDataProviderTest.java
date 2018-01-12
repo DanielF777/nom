@@ -37,6 +37,7 @@ public class RestaurantDataProviderTest {
 
     @Before
     public void setUp() {
+        System.setProperty("apiKey", "");
         URI uri = new UriBuilder("http://localhost:8543/").asUri();
         restaurantDataProvider = new RestaurantDataProvider(uri, jsonParser);
     }
