@@ -16,10 +16,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
+import java.net.URI;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by dev on 06/12/2017.
@@ -35,7 +37,8 @@ public class RestaurantDataProviderTest {
 
     @Before
     public void setUp() {
-        restaurantDataProvider = new RestaurantDataProvider(new UriBuilder("http://localhost:8543/").asUri(), jsonParser);
+        URI uri = new UriBuilder("http://localhost:8543/").asUri();
+        restaurantDataProvider = new RestaurantDataProvider(uri, jsonParser);
     }
 
     @After

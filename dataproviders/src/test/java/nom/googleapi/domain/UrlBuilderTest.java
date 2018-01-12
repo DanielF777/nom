@@ -19,7 +19,6 @@ public class UrlBuilderTest {
         assertThat(uri.getHost(), is("maps.googleapis.com"));
         assertThat(uri.getScheme(), is("https"));
         assertThat(uri.getPath(), is("/maps/api/place/nearbysearch/json"));
-        assertThat(uri, hasApiKeyParameterOf("AIzaSyBChwbZUapUol5hwM0KS0NXuesRjpv58_A"));
     }
 
     @Test
