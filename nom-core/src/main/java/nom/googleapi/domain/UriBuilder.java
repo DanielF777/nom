@@ -12,13 +12,10 @@ public class UriBuilder {
 
     private final Map<String, String> queryParams = new HashMap<>();
     private ReturnFormat returnFormat;
-    private String apiKey;
     private final String host;
 
     private void populateDefaultRequiredValues() {
         returnFormat = JSON;
-        apiKey = System.getProperty("apiKey");
-        queryParams.put("key", apiKey);
         queryParams.put("location", new MapLocation(51.5076656, -0.0700636).asString());
         queryParams.put("radius", String.valueOf(500));
     }
@@ -31,6 +28,11 @@ public class UriBuilder {
     public UriBuilder(String host) {
         this.host = host;
         populateDefaultRequiredValues();
+    }
+
+    public UriBuilder withApiKey(String apiKey) {
+        this.queryParams.put("key", apiKey);
+        return this;
     }
 
     public UriBuilder withLocation(MapLocation location) {

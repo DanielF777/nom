@@ -1,23 +1,18 @@
 package nom.googleapi.domain;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.net.URI;
 
-import static nom.matchers.UriParameterMatcher.*;
+import static nom.matchers.UriParameterMatcher.hasApiKeyParameterOf;
+import static nom.matchers.UriParameterMatcher.hasQueryParameter;
+import static nom.matchers.UriParameterMatcher.hasTypeParameterOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 public class UrlBuilderTest {
 
     private UriBuilder googleApiUrlBuilder = new UriBuilder();
-
-
-    @Before
-    public void setUp() {
-        System.setProperty("apiKey", "");
-    }
 
     @Test
     public void validBaseUri() {
@@ -56,6 +51,13 @@ public class UrlBuilderTest {
 
         assertThat(uri, hasQueryParameter("minPrice", "22"));
         assertThat(uri, hasQueryParameter("maxPrice", "44"));
+    }
+
+    @Test
+    public void validApiKeyIsSet() {
+        URI uri = googleApiUrlBuilder.withApiKey("DansKey").asUri();
+
+        assertThat(uri, hasApiKeyParameterOf("DansKey"));
     }
 
 

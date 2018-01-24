@@ -13,6 +13,7 @@ public class Runner {
 
         UriBuilder uriBuilder = new UriBuilder();
         uriBuilder = uriBuilder.setPriceRange(0, 3)
+                .withApiKey(System.getProperty("apiKey"))
                 .withType(PlaceType.FOOD)
                 .withLocation(new MapLocation(51.5076656, -0.0700636))
                 .withRadius(750);
